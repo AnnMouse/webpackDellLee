@@ -1,0 +1,25 @@
+{
+  "name": "webpackdelllee",
+  "version": "1.0.0",
+  "description": "follow with DellLee",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnnMouse/webpackDellLee.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnnMouse/webpackDellLee/issues"
+  },
+  "homepage": "https://github.com/AnnMouse/webpackDellLee#readme",
+  "devDependencies": {
+    "webpack-cli": "^3.3.5"
+  },
+  "dependencies": {
+    "webpack": "^4.35.2"
+  }
+}
