@@ -6,3 +6,6 @@ function Content(){
 }
 
 export default Content;
+
+// CommonJS 模式
+// module.exports=Content;

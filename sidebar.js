@@ -6,3 +6,6 @@ function Sidebar(){
 }
 
 export default Sidebar;
+
+// CommonJS 模式
+// module.exports=Sidebar;
