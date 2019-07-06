@@ -12,9 +12,23 @@ module.exports = {
                 options:{
                     // 占位符
                     name:'[name]_[hash].[ext]',
-                    outputPath:'images/'
+                    outputPath:'images/',
+                    limit:2048
                 }
             }
+        },{
+            test:/\.scss$/,
+            use:[
+            'style-loader',
+            {
+                loader:'css-loader',
+                options:{
+                    importLoaders:2,
+                    modules:true,
+                }
+            },
+            'sass-loader',
+        'postcss-loader']
         }]
     },
     output:{
