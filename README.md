@@ -10,3 +10,6 @@ webpack 三种方式
  - mode  production:被压缩代码，development：不被压缩
 ## loader中file-loader执行过程
  - 将图片拷贝到dist目录下，将生成的地址返回给变量
+ - 可配置参数：输出名称、输出地址
+## loader中url-loader
+ - 与file-loader类似，将图片转化为base64，可设置limit属性，超过设置值则与file-loader一样拷贝图片
