@@ -45,3 +45,11 @@ webpack 三种方式
  - postcss-loader:需创建postcss.config.js文件配置，添加autoprefixer插件（transfrom自动添加-webkit-transfrom）
  
  __注意__ loader的执行顺序是从下到上，从右到左，先将sass转化为css，再将css所有文件整合，传给style进行页面显示
+
+ ## plugins
+ 类似于生命周期函数，可以在webpack运行到某个时刻的时候，帮你做一些事情
+ ### HtmlWebpackPlugin
+ __作用：__ 打包结束后，自动生成一个html文件，并把打包生成的js自动引入到html文件中
+ - template参数：以哪个文件为模板生成html
+ ### CleanWebpackPlugin
+__作用：__ 自动清除原打包的文件夹，重新生成文件夹

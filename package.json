@@ -19,8 +19,10 @@
   "homepage": "https://github.com/AnnMouse/webpackDellLee#readme",
   "devDependencies": {
     "autoprefixer": "^9.6.1",
+    "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^3.0.0",
     "file-loader": "^4.0.0",
+    "html-webpack-plugin": "^3.2.0",
     "node-sass": "^4.12.0",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
