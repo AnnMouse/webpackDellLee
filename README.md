@@ -14,6 +14,7 @@ webpack 三种方式
 ### loader中file-loader执行过程
  - 将图片拷贝到dist目录下，将生成的地址返回给变量
  - 可配置参数：输出名称、输出地址
+ - 下载iconfont包，修改iconfont.css中url地址，安装引用icon即可
 ## url-loader
 ### 作用及用法
  - 与file-loader类似，将图片转化为base64，可设置limit属性，超过设置值则与file-loader一样拷贝图片

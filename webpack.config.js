@@ -24,11 +24,13 @@ module.exports = {
                 loader:'css-loader',
                 options:{
                     importLoaders:2,
-                    modules:true,
                 }
             },
             'sass-loader',
-        'postcss-loader']
+            'postcss-loader']
+        },{
+            test:/\.(eot|ttf|svg|woff)$/,
+            use:['file-loader']
         }]
     },
     output:{
