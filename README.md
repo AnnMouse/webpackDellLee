@@ -123,3 +123,48 @@ Dobumentation->Api-Hot Module Replacement
 讲述module.hot
 Documentation->Concepts->Hot Module Replacement
 html底层webpack的实现原理
+
+### babel
+babel： 将babel和webpack通信成功
+babel/core:  babel的核心代码库，识别js，转换成抽象语法树
+babel/preset-env 将es6语法转为es5
+babel/polyfill  补充对低版本的转换应用
+package.json
+```
+{ 
+    test: /\.js$/, 
+    exclude: /node_modules/, 
+    loader: "babel-loader",
+    options:{
+        presets:[["@babel/preset-env",{
+            useBuiltIns:'usage',
+            targets:{
+                chrome:'67'
+            }                 
+        }]]
+    } 
+}
+```
+exclude:node_modules中js不打包
+useBuiltIns:usage 根据业务代码进行polyfill补充
+targets:{chrome:"67"}表示高于chrome67版本不需要补充，因         为浏览器本身已经支持es6
+
+```
+options:{
+    // presets:[["@babel/preset-env",{
+    //     useBuiltIns:'usage',
+    //     targets:{
+    //         chrome:'67'
+    //     }                 
+    // }]]
+    "plugins": [["@babel/plugin-transform-runtime",{
+        "absoluteRuntime": false,
+        "corejs": 2,
+        "helpers": true,
+        "regenerator": true,
+        "useESModules": false
+    }]]
+} 
+```
+当对业务代码打包时，应用源polyfill配置即可。但对类库进行打包时，要使用plugin-transform-runtime，避免polyfill污染全局环境。
+__注意__ 当配置babel的options时，发现配置量巨大，可采用以下方法。

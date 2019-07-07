@@ -48,8 +48,26 @@ module.exports = {
             'style-loader',
             'css-loader',
             'postcss-loader']
-        }]
-    },
+        },{ test: /\.js$/, 
+            exclude: /node_modules/, 
+            loader: "babel-loader", 
+            // options:{
+            //     // presets:[["@babel/preset-env",{
+            //     //     useBuiltIns:'usage',
+            //     //     targets:{
+            //     //         chrome:'67'
+            //     //     }                 
+            //     // }]]
+            //     "plugins": [["@babel/plugin-transform-runtime",{
+            //         "absoluteRuntime": false,
+            //         "corejs": 2,
+            //         "helpers": true,
+            //         "regenerator": true,
+            //         "useESModules": false
+            //     }]]
+            // }
+        }
+    ]},
     plugins:[
         new HtmlWebpackPlugin({template:'src/index.html'}),
         new CleanWebpackPlugin(),
