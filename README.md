@@ -106,5 +106,20 @@ app.listen(8080,()=>{
 参考内容：
 命令行中如何使用webpack命令：Dobumentation->Api->Command Line Interface
 node中使用webpack命令:Dobumentation->Api->Node Api
-：Dobumentation->Guides-development
+Dobumentation->Guides-development
 Dobumentation->Configration-DevTool/DevServer
+## Hot Module Replacement
+表示doc只是修改部分发生变化，其他保持不变，提高性能。
+package.json
+```
+devServer:{
+    hot:true, // 开启热模块更新
+    hotOnly:true // 停止浏览器自动刷新
+}
+```
+参考内容：
+Dobumentation->Guides-Hot Module Replacement
+Dobumentation->Api-Hot Module Replacement
+讲述module.hot
+Documentation->Concepts->Hot Module Replacement
+html底层webpack的实现原理

@@ -53,7 +53,8 @@ module.exports = {
     plugins:[
         new HtmlWebpackPlugin({template:'src/index.html'}),
         new CleanWebpackPlugin(),
-        new webpack.HotModuleReplacementPlugin()],
+        new webpack.HotModuleReplacementPlugin()
+    ],
     output:{
         publicPath:'/',
         filename:'[name].js',
