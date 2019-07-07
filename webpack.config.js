@@ -24,7 +24,7 @@ module.exports = {
                     // 占位符
                     name:'[name]_[hash].[ext]',
                     outputPath:'images/',
-                    limit:2048
+                    limit:20480
                 }
             }
         },{

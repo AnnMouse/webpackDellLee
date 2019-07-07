@@ -168,3 +168,24 @@ options:{
 ```
 当对业务代码打包时，应用源polyfill配置即可。但对类库进行打包时，要使用plugin-transform-runtime，避免polyfill污染全局环境。
 __注意__ 当配置babel的options时，发现配置量巨大，可采用以下方法。
+
+### react打包
+.babelrc
+```
+{
+    presets:[
+        [
+            "@babel/preset-env",{
+            targets:{
+                chrome:'67'
+            },
+            useBuiltIns:'usage'                
+            }
+        ],
+        "@babel/preset-react"
+    ]
+}
+// 执行顺序，从下往上
+```
+参考内容：
+babel官网，docs->react
