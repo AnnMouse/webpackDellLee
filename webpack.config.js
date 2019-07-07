@@ -2,10 +2,18 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 module.exports = {
-    mode:"production",
-    devtool:'source-map',
+    mode:"development",
+    devtool:'cheap-module-eval-source-map',
     entry:{
         main:'./src/index.js'
+    },
+    devServer:{
+        contentBase:'./dist',
+        open:true,
+        port:8090
+        // proxy:{
+        //     './api':'http://localhost:3000'
+        // }
     },
     module:{
         rules:[{
@@ -40,6 +48,7 @@ module.exports = {
         new HtmlWebpackPlugin({template:'src/index.html'}),
         new CleanWebpackPlugin()],
     output:{
+        publicPath:'/',
         filename:'[name].js',
         path:path.resolve(__dirname,'dist')
     }

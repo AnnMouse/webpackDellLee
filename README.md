@@ -65,3 +65,46 @@ webpack打包后文件与源文件映射关系。当js中提示错误信息时�
 mode:production,不需要source-map
 但devtool即可:cheap-module-source-map
 mode:development,cheap-module-eval-source-map
+
+## webpackDevServer
+### watch监控自动打包
+package.json中添加{
+    watch："webpack -watch"
+}
+### 启动Devserver
+配置项中：
+- contentBase:'./dist' 从哪个路径启动html
+- open：启动后浏览器自动打开指定地址
+- proxy：配置跨域接口模拟，访问指定地址时，代理到对应地址（vue和react脚手架均只用webpack） 
+
+### 自己写类似于webpackserver的server
+创建server.js,package.json的scripts添加node server.js
+```
+const express = require('express');
+const webpack = require('webpack');
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const config = require('./webpack.config.js');
+const complier = webpack(config);（编译器）
+/* 以上信息表示：
+webpackDevMiddleware为中间件
+ complier表示应用webpack命令以配置文件为主进行编译。
+ 此方法为在node中使用webpack命令
+*/
+
+const app=express();
+app.use(webpackDevMiddleware(complier,{
+    publicPath:config.output.publicPath
+}))
+/*
+通过webpack和webpack配置生成编译器complier。启用中间件，中间件参数，一个是编译器，一个是编译完成后输出路径，与congfig中output的publicPath相对应*/
+
+app.listen(8080,()=>{
+    console.log('server is running!!');
+});
+/*通过express创建了http服务器，端口为8080。*/
+```
+参考内容：
+命令行中如何使用webpack命令：Dobumentation->Api->Command Line Interface
+node中使用webpack命令:Dobumentation->Api->Node Api
+：Dobumentation->Guides-development
+Dobumentation->Configration-DevTool/DevServer
