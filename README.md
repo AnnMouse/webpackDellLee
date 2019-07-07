@@ -53,3 +53,15 @@ webpack 三种方式
  - template参数：以哪个文件为模板生成html
  ### CleanWebpackPlugin
 __作用：__ 自动清除原打包的文件夹，重新生成文件夹
+
+## sourceMap
+webpack打包后文件与源文件映射关系。当js中提示错误信息时，控制台显示源文件的错误，而不是webpack中的错误。
+ - 为inline表示将source-map存放到打包好的js文件中。
+ - cheap 错误提示只精确到行没精确到列，负责业务代码中错误，打包较快些。
+ - source-map 表示打包完后生成.map.js
+ - module 表示不仅会提示当前自己文档错误，也包括module中包含的错误。
+ - eval 打包速度最快，依然可以生成映射
+ __注意__:
+mode:production,不需要source-map
+但devtool即可:cheap-module-source-map
+mode:development,cheap-module-eval-source-map
