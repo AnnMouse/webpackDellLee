@@ -259,4 +259,15 @@ __使用方法__ 在mode为development方式下，加入optimization
  - maxInitialRequests:入口处的最大并行请求数，即首页进行加载的时候，最多分割出3个文件
  - automaticNameDelimiter:"~"分割打包后名字的默认连接符
  - cacheGroups:缓存组，用于配置打包规则。分vendors和default两部分，test表示在哪个文件夹下。priority为优先级，若两者都满足，看哪个优先级最高，filename则是打包出来后的文件名字。reuseExistingChunk表示如果打包过程中碰到已打包过的，则忽略，使用原打包好的模块即可。
+
+ ### 打包分析，Preloading,Prefetching
+ - 打包分析：对打包生成的文件分析。www.github.com/webpack/analyse,webpack分析的git库,在打包启动命令里添加 --profile --json > stats.json 打包生成的stats文件可在以下地址中打开，并进行打包文件分析http://webpack.github.com/analyse。或者在webpack->guides->code Spliting->bundle analysis
+ - 提高代码的使用率要比缓存来的更实际，使用率越高，性能越高。查看使用率，在控制台中ctrl+shift+p，输入show coverage。异步加载提高网站性能。
+ - prefetch:主代码加载完，带宽释放出来后将其他页面加载上。preload与主代码一起加载。
+ ```
+ import(/*webpackprefetch:true */'./click.js').then(()=>{});
+ ```
+
+
+
 ### 以上信息来自 http://www.dell-lee.com/
