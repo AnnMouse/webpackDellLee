@@ -189,3 +189,12 @@ __注意__ 当配置babel的options时，发现配置量巨大，可采用以下
 ```
 参考内容：
 babel官网，docs->react
+
+## Tree Shaking 
+将模块中用到的代码打包，其他无用代码不打包。
+只支持 ES Module。
+__使用方法__ 在mode为development方式下，加入optimization
+如果是production方式下，不需要加入optimization
+同时修改package.json，增加sideEffects，该项表示哪些文件不需要做tree shaking。
+### production和development
+将公共部分拆分到webpack.common.js,采用webpack-merge进行合并。
