@@ -198,3 +198,25 @@ __使用方法__ 在mode为development方式下，加入optimization
 同时修改package.json，增加sideEffects，该项表示哪些文件不需要做tree shaking。
 ### production和development
 将公共部分拆分到webpack.common.js,采用webpack-merge进行合并。
+### code spliting
+以下为手动代码分割
+```
+    entry:{
+        lodash:'./src/lodash.js',
+        main:'./src/index.js',
+    },
+```
+以下为自动代码分割,webpack.common.js配置同步加载模块打包
+```
+    optimization:{
+        splitChunks:{
+            chunks:'all'
+        }
+    }
+```
+异步加载与自动分割无需任何配置，自动进行打包分割，只是用异步import形式加载时，应注意需要依赖babel，需要安装babel插件（babel-plugin-dynamic-import-webpack）,.babelrc添加配置
+```
+{"plugins": ["dynamic-import-webpack"]}
+```
+
+### 以上信息来自 http://www.dell-lee.com/
