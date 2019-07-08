@@ -218,5 +218,45 @@ __使用方法__ 在mode为development方式下，加入optimization
 ```
 {"plugins": ["dynamic-import-webpack"]}
 ```
-
+### splitChunksPlugin配置参数
+目的：打包出来的第三方插件为原名而不是0.js,采用魔法注释Magic Comments，
+```
+    import(/* webpackChunkName:'lodash'*/'lodash').then(()=>{});
+```
+修改方式：删除babel-plugin-dynamic-import-webpack,安装官方@babel/plugin-syntax-dynamic-import，修改.babelrc中plugins，以及webpack.common.js中的配置
+```
+    optimization:{
+        splitChunks: {
+            chunks: "async", 
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            automaticNameDelimiter: '~',
+            name: true,
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10，
+                    filename：'vendors.js'
+                },
+                default:{
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                    filename:'common.js'
+                }
+            }
+        }
+    }
+}
+```
+ - chunks: async只实现异步加载模块的代码分割,如果需要全部打包用“all”.同时修改cacheGroups中的配置."initial"同步代码分割
+ - minSize:最小多大才进行代码分割。其他则根据cacheGroups中default配置进行打包
+ - maxSize:会按要求进行二次拆分，一般不需配置
+ - minChunks:被引用几次才会被分割
+ - maxAsyncRequests:按需加载时最大并行请求数，如果代码分割超过5个，就不会再分割
+ - maxInitialRequests:入口处的最大并行请求数，即首页进行加载的时候，最多分割出3个文件
+ - automaticNameDelimiter:"~"分割打包后名字的默认连接符
+ - cacheGroups:缓存组，用于配置打包规则。分vendors和default两部分，test表示在哪个文件夹下。priority为优先级，若两者都满足，看哪个优先级最高，filename则是打包出来后的文件名字。reuseExistingChunk表示如果打包过程中碰到已打包过的，则忽略，使用原打包好的模块即可。
 ### 以上信息来自 http://www.dell-lee.com/
