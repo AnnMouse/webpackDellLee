@@ -227,7 +227,7 @@ __使用方法__ 在mode为development方式下，加入optimization
 ```
     optimization:{
         splitChunks: {
-            chunks: "async", 
+            chunks: "all", 
             minSize: 30000,
             minChunks: 1,
             maxAsyncRequests: 5,
@@ -267,6 +267,10 @@ __使用方法__ 在mode为development方式下，加入optimization
  ```
  import(/*webpackprefetch:true */'./click.js').then(()=>{});
  ```
+### CSS 打包
+ - 补充知识点：output中添加chunkFilename表示间接引入的js的打包名称。
+ - css打包：一般css直接打包到js中使用的插件MiniCssExtractPlugin,目前版本无论开发环境还是线上环境都可用。但注意tree Shaking配置可能会影响。因此，package.json中的sideEffects将css配置即可。
+ - cssd代码压缩：添加插件optimize-css-assets-webpack-plugin，可根据入口进行压缩，具体参考官网。
 
 
 

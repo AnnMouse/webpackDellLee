@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
+
 module.exports = {
     entry:{
         main:'./src/index.js',
@@ -19,26 +20,8 @@ module.exports = {
                 }
             }
         },{
-            test:/\.scss$/,
-            use:[
-            'style-loader',
-            {
-                loader:'css-loader',
-                options:{
-                    importLoaders:2,
-                }
-            },
-            'sass-loader',
-            'postcss-loader']
-        },{
             test:/\.(eot|ttf|svg|woff)$/,
             use:['file-loader']
-        },{
-            test:/\.css$/,
-            use:[
-            'style-loader',
-            'css-loader',
-            'postcss-loader']
         },{ test: /\.js$/, 
             exclude: /node_modules/, 
             loader: "babel-loader", 
@@ -61,32 +44,17 @@ module.exports = {
     ]},
     plugins:[
         new HtmlWebpackPlugin({template:'src/index.html'}),
-        new CleanWebpackPlugin()
+        new CleanWebpackPlugin(),
     ],
     output:{
         filename:'[name].js',
+        chunkFilename:'[name].chunk.js',
         path:path.resolve(__dirname,'../dist')
     },
     optimization:{
+        usedExports:true,
         splitChunks: {
             chunks: "all",
-            minSize: 30000,
-            minChunks: 1,
-            maxAsyncRequests: 5,
-            maxInitialRequests: 3,
-            automaticNameDelimiter: '~',
-            name: true,
-            cacheGroups: {
-                vendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    priority: -10,
-                },
-                default:{
-                    minChunks: 2,
-                    priority: -20,
-                    reuseExistingChunk: true
-                }
-            }
         }
     }
 }
