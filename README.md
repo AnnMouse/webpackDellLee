@@ -288,6 +288,39 @@ __使用方法__ 在mode为development方式下，加入optimization
          }
     }
  ```
+ ### shimming 垫片，补充，设置全局变量。
+ - webpack按照模块打包，每个模块内部自使用，之间不能共用。每个地方用到$的时候，都需要在最前面使用import引入。所以，可配置公共变量，即使用垫片。
+ ```
+ plugins:[
+    new webpack.ProvidePlugin({
+        $:'jquery',
+        _join:['lodash','join']
+    }),
+ ],
+ ```
+ - 以上代表在模块中自动引入，等同于
+ ```
+ import $ from 'jquery';
+ import _ from 'lodash';
+ ```
+- 以下为修改this指向，使用imports-loader
+ ```
+    { 
+        test: /\.js$/, 
+        exclude: /node_modules/, 
+        use:[{
+            loader: 'babel-loader', 
+        },{
+            loader:'imports-loader?this=>window'
+        }]
+    }
+ ```
+ 修改模块中所有this指向，指向window
+ - 参考文档
+ documentation->guides阅读英文文档
+
+
+
 
 
 

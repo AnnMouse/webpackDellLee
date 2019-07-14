@@ -24,7 +24,12 @@ module.exports = {
             use:['file-loader']
         },{ test: /\.js$/, 
             exclude: /node_modules/, 
-            loader: "babel-loader", 
+            use:[{
+                loader: 'babel-loader', 
+            },{
+                loader:'imports-loader?this=>window'
+            }]
+            
             // options:{
             //     // presets:[["@babel/preset-env",{
             //     //     useBuiltIns:'usage',
@@ -45,6 +50,10 @@ module.exports = {
     plugins:[
         new HtmlWebpackPlugin({template:'src/index.html'}),
         new CleanWebpackPlugin(),
+        new webpack.ProvidePlugin({
+            $:'jquery',
+            _join:['lodash','join']
+        }),
     ],
     optimization:{
         runtimeChunk:{

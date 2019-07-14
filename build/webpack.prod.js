@@ -44,8 +44,8 @@ const prodConfig = {
         minimizer: [new TerserJSPlugin({}),new OptimizeCssAssetsPlugin({})],
     },
     output:{
-        filename:'[name].[contenthash].js',
-        chunkFilename:'[name].[contenthash].js',
+        filename:'[name].[hash].js',
+        chunkFilename:'[name].[hash].js',
     },
 }
 

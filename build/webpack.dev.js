@@ -37,8 +37,8 @@ const devConfig = {
         new webpack.HotModuleReplacementPlugin()
     ],
     output:{
-        filename:'[name].[contenthash].js',
-        chunkFilename:'[name].[contenthash].js',
+        filename:'[name].[hash].js',
+        chunkFilename:'[name].[hash].js',
     },
 }
 
