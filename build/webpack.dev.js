@@ -35,7 +35,11 @@ const devConfig = {
     },
     plugins:[
         new webpack.HotModuleReplacementPlugin()
-    ]
+    ],
+    output:{
+        filename:'[name].[contenthash].js',
+        chunkFilename:'[name].[contenthash].js',
+    },
 }
 
 module.exports = merge(commonConfig,devConfig);

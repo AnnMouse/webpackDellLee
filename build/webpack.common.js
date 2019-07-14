@@ -46,15 +46,31 @@ module.exports = {
         new HtmlWebpackPlugin({template:'src/index.html'}),
         new CleanWebpackPlugin(),
     ],
-    output:{
-        filename:'[name].js',
-        chunkFilename:'[name].chunk.js',
-        path:path.resolve(__dirname,'../dist')
-    },
     optimization:{
+        runtimeChunk:{
+            name:'runtime'
+        }, // 最新版本不用额外设置
         usedExports:true,
         splitChunks: {
-            chunks: "all",
+            chunks: "all", 
+            minSize: 30000,
+            minChunks: 1,
+            maxAsyncRequests: 5,
+            maxInitialRequests: 3,
+            automaticNameDelimiter: '~',
+            name: true,
+            cacheGroups: {
+                vendors: {
+                    test: /[\\/]node_modules[\\/]/,
+                    priority: -10,
+                    name:'vendors'
+                },
+                default:{
+                    minChunks: 2,
+                    priority: -20,
+                    reuseExistingChunk: true,
+                }
+            }
         }
     }
 }

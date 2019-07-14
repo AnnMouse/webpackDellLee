@@ -261,7 +261,7 @@ __使用方法__ 在mode为development方式下，加入optimization
  - cacheGroups:缓存组，用于配置打包规则。分vendors和default两部分，test表示在哪个文件夹下。priority为优先级，若两者都满足，看哪个优先级最高，filename则是打包出来后的文件名字。reuseExistingChunk表示如果打包过程中碰到已打包过的，则忽略，使用原打包好的模块即可。
 
  ### 打包分析，Preloading,Prefetching
- - 打包分析：对打包生成的文件分析。www.github.com/webpack/analyse,webpack分析的git库,在打包启动命令里添加 --profile --json > stats.json 打包生成的stats文件可在以下地址中打开，并进行打包文件分析http://webpack.github.com/analyse。或者在webpack->guides->code Spliting->bundle analysis
+ - 打包分析：对打包生成的文件分析。www.github.com/webpack/analyse,webpack分析的git库,在打包启动命令里添加 webpack --profile --json > stats.json --config ./build/webpack.dev.js 打包生成的stats文件可在以下地址中打开，并进行打包文件分析http://webpack.github.com/analyse。或者在webpack->guides->code Spliting->bundle analysis
  - 提高代码的使用率要比缓存来的更实际，使用率越高，性能越高。查看使用率，在控制台中ctrl+shift+p，输入show coverage。异步加载提高网站性能。
  - prefetch:主代码加载完，带宽释放出来后将其他页面加载上。preload与主代码一起加载。
  ```
@@ -271,6 +271,23 @@ __使用方法__ 在mode为development方式下，加入optimization
  - 补充知识点：output中添加chunkFilename表示间接引入的js的打包名称。
  - css打包：一般css直接打包到js中使用的插件MiniCssExtractPlugin,目前版本无论开发环境还是线上环境都可用。但注意tree Shaking配置可能会影响。因此，package.json中的sideEffects将css配置即可。
  - cssd代码压缩：添加插件optimize-css-assets-webpack-plugin，可根据入口进行压缩，具体参考官网。
+
+ ### 浏览器缓存
+ - 缓存机制：访问浏览器时加载了对应js文件。如果没有强制刷新，浏览器仍然访问的是原文件。只要名称发生变化，浏览器缓存则不起作用，可随时更新。启用contenthash占位符即可。在output文件名称中，添加contenthash，表示js文件名称根据每次hash值得来。如果业务代码有变化，则hash改变，无变化则不变。
+ ```
+     output:{
+        filename:'[name].[contenthash].js',
+        chunkFilename:'[name].[contenthash].js',
+    }
+ ```
+ - webpack内置manifest逻辑（包括业务逻辑和chunks逻辑），可将其提炼到一个单独文件。
+  ```
+     optimization:{
+         runtimeChunk:{
+             name:'runtime'
+         }
+    }
+ ```
 
 
 

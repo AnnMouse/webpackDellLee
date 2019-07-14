@@ -43,6 +43,10 @@ const prodConfig = {
     optimization: {
         minimizer: [new TerserJSPlugin({}),new OptimizeCssAssetsPlugin({})],
     },
+    output:{
+        filename:'[name].[contenthash].js',
+        chunkFilename:'[name].[contenthash].js',
+    },
 }
 
 module.exports = merge(commonConfig,prodConfig);
