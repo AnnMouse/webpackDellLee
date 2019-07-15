@@ -1,11 +1,19 @@
-// import _ from 'lodash';
-// import $ from 'jquery';
-// import { ui } from './jquery.ui';
+import React,{ Component } from 'react';
+import ReactDom from 'react-dom';
+import axios from 'axios';
 
+class App extends Component {
 
-// ui();
-// const dom=$('<div>');
-// dom.html(_.join(['dell','lee']), '-');
-// $('body').append(dom);
+    componentDidMount(){
+        axios.get('/react/api/header.json')
+            .then((res) => {
+                console.log(res);
+            })
+    }
 
-console.log(this);
+    render(){
+        return <div>Hello World</div>;
+    }
+}
+
+ReactDom.render(<App />,document.getElementById('root'));

@@ -335,7 +335,31 @@ __使用方法__ 在mode为development方式下，加入optimization
         "build": "webpack --env.production=abc --config ./build/webpack.common.js"
     }
  ```
-
+ ### devServer代理
+ - devserver中添加proxy代理
+ ```
+    devServer:{
+        secure:false, // 访问https
+        proxy:{
+        '/react/api':{
+            target:'http://www.dell-lee.com',
+            pathRewrite:{ // 改写路径
+                'header.json':'demo.json'
+            },
+            changeOrigin:true, // 改写origin选项，可以代理更多域名下的请求
+            headers:{ //自定义，模拟登录行为
+                host:'www.dell-lee.com'
+            },
+            bypass: function(req, res, proxyOptions) { // 过滤
+                if (req.headers.accept.indexOf('html') !== -1) {
+                    console.log('Skipping proxy for browser request.');
+                    return '/index.html';
+                }
+            }
+        }
+    }
+ ```
+ 参考文档：documentation -> configuration -> devserver
 
 
 
