@@ -1,5 +1,3 @@
-const merge = require('webpack-merge');
-const commonConfig=require('./webpack.common.js');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
@@ -49,4 +47,4 @@ const prodConfig = {
     },
 }
 
-module.exports = merge(commonConfig,prodConfig);
+module.exports = prodConfig;

@@ -2,8 +2,11 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const webpack = require('webpack');
+const merge=require('webpack-merge');
+const devConfig=require('./webpack.dev.js');
+const prodConfig=require('./webpack.prod.js');
 
-module.exports = {
+const commonConfig = {
     entry:{
         main:'./src/index.js',
     },
@@ -82,4 +85,12 @@ module.exports = {
             }
         }
     }
+}
+
+// 全局变量来自于package.json中script命令
+module.exports = (env) => {
+    if(env && env.production==='abc'){
+        return merge(commonConfig,prodConfig);
+    }
+    return merge(commonConfig,devConfig);
 }

@@ -319,6 +319,24 @@ __使用方法__ 在mode为development方式下，加入optimization
  - 参考文档
  documentation->guides阅读英文文档
 
+ ### 打包过程如何使用环境变量
+ - 原package.json中分别使用两个文件进行打包，现改为全部使用webpack.common.js文件进行打包，在命令行中添加全局变量
+ ```
+    // webpack.common.js全局变量来自于package.json中script命令
+    module.exports = (env) => {
+        if(env && env.production){
+            return merge(commonConfig,prodConfig);
+        }
+        return merge(commonConfig,devConfig);
+    }
+
+    // package.json
+    script:{
+        "build": "webpack --env.production=abc --config ./build/webpack.common.js"
+    }
+ ```
+
+
 
 
 
