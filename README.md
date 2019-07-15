@@ -335,6 +335,17 @@ __使用方法__ 在mode为development方式下，加入optimization
         "build": "webpack --env.production=abc --config ./build/webpack.common.js"
     }
  ```
+  ### Progressive Web Application
+  - pwa 为本地缓存，服务器挂掉也可以看之前的页面。使用webpack插件workbox-webpack-plugin
+  ```
+  plugins:[
+         new WorkboxPlugin.GenerateSW({
+            clientsClaim:true,
+            skipWaiting:true
+        })
+  ]
+  ```
+  - 模拟后台服务器，http-server
 
 
 

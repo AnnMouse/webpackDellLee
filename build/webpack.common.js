@@ -1,12 +1,8 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-const webpack = require('webpack');
-const merge=require('webpack-merge');
-const devConfig=require('./webpack.dev.js');
-const prodConfig=require('./webpack.prod.js');
 
-const commonConfig = {
+module.exports = {
     entry:{
         main:'./src/index.js',
     },
@@ -29,8 +25,6 @@ const commonConfig = {
             exclude: /node_modules/, 
             use:[{
                 loader: 'babel-loader', 
-            },{
-                loader:'imports-loader?this=>window'
             }]
             
             // options:{
@@ -53,10 +47,6 @@ const commonConfig = {
     plugins:[
         new HtmlWebpackPlugin({template:'src/index.html'}),
         new CleanWebpackPlugin(),
-        new webpack.ProvidePlugin({
-            $:'jquery',
-            _join:['lodash','join']
-        }),
     ],
     optimization:{
         runtimeChunk:{
@@ -85,12 +75,4 @@ const commonConfig = {
             }
         }
     }
-}
-
-// 全局变量来自于package.json中script命令
-module.exports = (env) => {
-    if(env && env.production==='abc'){
-        return merge(commonConfig,prodConfig);
-    }
-    return merge(commonConfig,devConfig);
 }

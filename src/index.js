@@ -1,11 +1,12 @@
-// import _ from 'lodash';
-// import $ from 'jquery';
-// import { ui } from './jquery.ui';
+console.log('hello,baobao!');
 
-
-// ui();
-// const dom=$('<div>');
-// dom.html(_.join(['dell','lee']), '-');
-// $('body').append(dom);
-
-console.log(this);
+if('serviceWorker' in navigator){
+    window.addEventListener('load',()=>{
+        navigator.serviceWorker.register('./service-worker.js')
+            .then((registration)=>{
+                console.log("serviceWorker registed!");
+            }).catch((error)=>{
+                console.log("serviceWorker registed error!");
+            });
+    })
+}
