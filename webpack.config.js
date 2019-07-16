@@ -22,7 +22,8 @@ const commonConfig = {
                     'header.json':'demo.json'
                 }
             }
-        }
+        },
+        historyApiFallback:true,
     },
     module:{   
         rules:[{
