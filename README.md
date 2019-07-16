@@ -361,6 +361,9 @@ __使用方法__ 在mode为development方式下，加入optimization
  ```
  参考文档：documentation -> configuration -> devserver
 
+ ### 单页面路由问题
+ - historyApiFallback 解决路由跳转问题，可以用rewrite修改from和to修改跳转。同时，后端最好也跟着进行配置，防止线下和线上跳转出问题。
+
 
 
 
