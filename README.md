@@ -364,6 +364,10 @@ __使用方法__ 在mode为development方式下，加入optimization
  ### 单页面路由问题
  - historyApiFallback 解决路由跳转问题，可以用rewrite修改from和to修改跳转。同时，后端最好也跟着进行配置，防止线下和线上跳转出问题。
 
+ ### eslint 使用与打包
+ - 首先安装eslint,npm install eslint -D;其次，npx eslint src实行eslint。安装完后会报很多错误，鼠标放到错误上会提示是什么错误。忽略部分错误，在.eslintrc.js的rules中添加规则，设置值为0即可。
+ - 使用eslint-loader可以帮助即使没有eslint插件也同样可以提示错误。设置devServer的overlay: true,如果代码中有错，可将错误显示到页面中。 
+ 参考文档：webpack->loaders-eslint
 
 
 
