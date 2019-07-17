@@ -5,29 +5,47 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 const webpack = require('webpack');
 
+const makePlugins = (configs) => {
+    const plugins=[new CleanWebpackPlugin()];
+    const files = fs.readdirSync(path.resolve(__dirname,'../dll'));
+
+    Object.keys(configs.entry).forEach(item => {
+        plugins.push(new HtmlWebpackPlugin({
+            template:'src/index.html',
+            filename:`${item}.html`,
+            chunks:['runtime','vendors',item]
+        }));
+    })
+
+    files.forEach(file => {
+        if(/.*\.dll.js/.test(file)){
+            plugins.push(new AddAssetHtmlWebpackPlugin({
+                filepath:path.resolve(__dirname,'../dll',file)
+            }));
+        }
+        if(/.*\.manifest.js/.test(file)){
+            plugins.push(new webpack.DllReferencePlugin({
+                manifest:path.resolve(__dirname,'../dll',file)
+            }));
+        }
+    });
+    return plugins;
+}
 // 使用node动态添加plugin
-const plugins=[
-    new HtmlWebpackPlugin({template:'src/index.html'}),
-    new CleanWebpackPlugin(),
-];
+// const plugins=[
 
-const files = fs.readdirSync(path.resolve(__dirname,'../dll'));
-files.forEach(file => {
-    if(/.*\.dll.js/.test(file)){
-        plugins.push(new AddAssetHtmlWebpackPlugin({
-            filepath:path.resolve(__dirname,'../dll',file)
-        }));
-    }
-    if(/.*\.manifest.js/.test(file)){
-        plugins.push(new webpack.DllReferencePlugin({
-            manifest:path.resolve(__dirname,'../dll',file)
-        }));
-    }
-});
+//     new HtmlWebpackPlugin({
+//         template:'src/index.html',
+//         filename:'list.html',
+//         chunks:['runtime','vendors','list']
+//     }),
+    
+// ];
 
-module.exports = {
+const configs = {
     entry:{
-        main:'./src/index.js',
+        index:'./src/index.js',
+        list:'./src/List.js'
     },
     module:{
         rules:[{
@@ -67,7 +85,6 @@ module.exports = {
             // }
         }
     ]},
-    plugins,
     optimization:{
         runtimeChunk:{
             name:'runtime'
@@ -94,3 +111,7 @@ module.exports = {
         path:path.resolve(__dirname,'../dist')
     },
 }
+
+configs.plugins=makePlugins(configs);
+
+module.exports = configs;

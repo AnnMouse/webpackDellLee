@@ -355,6 +355,23 @@ __使用方法__ 在mode为development方式下，加入optimization
  11.开发环境内存编译
  12.开发环境剔除无用插件 
 
+### 多页面打包配置
+- 在plugin中添加多个页面
+```
+plugins:{
+    new HtmlWebpackPlugin({
+        template:'src/index.html',
+        filename:'index.html',
+        chunks:['runtime','vendors','main']
+    }),
+    new HtmlWebpackPlugin({
+        template:'src/index.html',
+        filename:'list.html',
+        chunks:['runtime','vendors','list']
+    }),
+}
+```
+- 合并代码，动态生成plugins
 
 
 
