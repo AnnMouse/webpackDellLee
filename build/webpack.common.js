@@ -1,7 +1,29 @@
 const path = require('path');
+const fs=require('fs');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const AddAssetHtmlWebpackPlugin = require('add-asset-html-webpack-plugin');
 const webpack = require('webpack');
+
+// 使用node动态添加plugin
+const plugins=[
+    new HtmlWebpackPlugin({template:'src/index.html'}),
+    new CleanWebpackPlugin(),
+];
+
+const files = fs.readdirSync(path.resolve(__dirname,'../dll'));
+files.forEach(file => {
+    if(/.*\.dll.js/.test(file)){
+        plugins.push(new AddAssetHtmlWebpackPlugin({
+            filepath:path.resolve(__dirname,'../dll',file)
+        }));
+    }
+    if(/.*\.manifest.js/.test(file)){
+        plugins.push(new webpack.DllReferencePlugin({
+            manifest:path.resolve(__dirname,'../dll',file)
+        }));
+    }
+});
 
 module.exports = {
     entry:{
@@ -16,7 +38,7 @@ module.exports = {
                     // 占位符
                     name:'[name]_[hash].[ext]',
                     outputPath:'images/',
-                    limit:20480
+                    limit:10240
                 }
             }
         },{
@@ -26,8 +48,6 @@ module.exports = {
             exclude: /node_modules/, 
             use:[{
                 loader: 'babel-loader', 
-            },{
-                loader:'imports-loader?this=>window'
             }]
             
             // options:{
@@ -47,19 +67,12 @@ module.exports = {
             // }
         }
     ]},
-    plugins:[
-        new HtmlWebpackPlugin({template:'src/index.html'}),
-        new CleanWebpackPlugin(),
-        new webpack.ProvidePlugin({
-            $:'jquery',
-            _join:['lodash','join']
-        }),
-    ],
+    plugins,
     optimization:{
         runtimeChunk:{
             name:'runtime'
         }, // 最新版本不用额外设置
-        usedExports:true,
+        usedExports:true, // 表示pakagejson中指定的类似文件不会进行tree shaking
         splitChunks: {
             chunks: "all", 
             minSize: 30000,
@@ -72,14 +85,12 @@ module.exports = {
                 vendors: {
                     test: /[\\/]node_modules[\\/]/,
                     priority: -10,
-                    name:'vendors'
-                },
-                default:{
-                    minChunks: 2,
-                    priority: -20,
-                    reuseExistingChunk: true,
                 }
             }
         }
-    }
+    },
+    performance:false, // 不显示打包性能问题
+    output:{
+        path:path.resolve(__dirname,'../dist')
+    },
 }

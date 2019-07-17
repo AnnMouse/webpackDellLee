@@ -319,6 +319,43 @@ __使用方法__ 在mode为development方式下，加入optimization
  - 参考文档
  documentation->guides阅读英文文档
 
+ ### 提高打包性能问题方法
+ 1. module中对js打包时，用exclude剔除node_modules部分,减少重复打包；或者用include指定打包哪个文件夹下的js，与exclude异曲同工
+ ```
+ module:{
+     ruls:{
+         test:/\.js$/,
+         exclude:/node_modules/,
+         include:path.resolve(__dirname,'../src')
+         use:'babel-loader'
+     }
+ }
+ ```
+ 2. 跟上技术迭代，用最新的技术node\npm\yarn
+ 3. 尽可能少的模块应用loader，减少loaders的作用范围
+ 4. plugins尽可能精简和可靠，尽可能使用webpack社区验证后的插件。
+ 5. 合理配置resolve参数
+ ```
+ resolve:{
+     extensions:['js','jsx'] //import xxx from 'xx'后缀名匹配js或者jsx
+     mainFiles:['index'] // import xxx from './ss/'表示在该目录下先找index文件
+     alias:{
+         delllee:path.resolve(__dirname,'../src/child') //import xx from delllee
+     }
+ }
+ ```
+ 6. 使用DllPlugin提高打包速度
+ 目标：第三方模块只打包一次，引入第三方模块时，直接使用dll文件引入即可。
+ - 创建webpack.dll.js文件,生成的vendor.dll.js为所有第三方模块，并用library暴露出去。同时使用webpack.DllPlugin()生成manifest.json映射文件。运行npm run build:dll 生成文件。
+ - 在webpack.common.js引入两个插件，AddAssetHtmlWebpackPlugin()将生成的dll.js文件引入到html中。webpack.DllReferencePlugin()用于打包过程中用到的第三方模块从dll中查询即可，不需要再进行一次打包
+ 7. 控制包文件大小，splitChunks拆分模块进行打包
+ 8. thread-loader,parallel-webpack,happypack多进程打包
+ 9. 合理使用sourceMap越详细打包越慢
+ 10.结合stats分析打包结果，使用线上线下打包分析时长。
+ 11.开发环境内存编译
+ 12.开发环境剔除无用插件 
+
+
 
 
 
